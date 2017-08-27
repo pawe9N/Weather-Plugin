@@ -15,6 +15,7 @@
   "content_scripts":[
   	{
   		"matches": ["http://*/*", "https://*/", "<all_urls>"],
+  		"js": ["angular.min.js", "script.js"]
   	}
   ]
 }
