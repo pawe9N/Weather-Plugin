@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Wiki plugin",
-  "description": "Wiki plugin",
+  "name": "Weather plugin",
+  "description": "Weather Plugin",
   "version": "1.0",
 
   "browser_action": {
@@ -15,7 +15,7 @@
   "content_scripts":[
   	{
   		"matches": ["http://*/*", "https://*/", "<all_urls>"],
-  		"js": ["angular.min.js", "script.js"]
+  		"js": ["script.js", "jquery-3.2.1.js"]
   	}
   ]
 }
