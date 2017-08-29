@@ -15,7 +15,7 @@
   "content_scripts":[
   	{
   		"matches": ["http://*/*", "https://*/", "<all_urls>"],
-  		"js": ["script.js", "jquery-3.2.1.js"]
+  		"js": ["script.js", "jquery-3.2.1.js", "bootstrap.js", "popper.js"]
   	}
   ]
 }

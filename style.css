@@ -1,0 +1,13 @@
+.carousel{
+	height: 300px;
+}
+
+.carousel-caption{
+	background-size: 100% 100%;
+	color: black;
+	height: 200px;
+	font-size: 11px;
+}
+body{
+	width: 400px;
+}
