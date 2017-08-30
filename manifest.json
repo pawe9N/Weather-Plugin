@@ -6,16 +6,16 @@
   "version": "1.0",
 
   "browser_action": {
-    "default_icon": "icon.png",
+    "default_icon": "images/icon.png",
     "default_popup": "popup.html"
   },
   "icons": {
-  	"64": "icon.png"
+  	"64": "images/icon.png"
   },
   "content_scripts":[
   	{
   		"matches": ["http://*/*", "https://*/", "<all_urls>"],
-  		"js": ["script.js", "jquery-3.2.1.js", "bootstrap.js", "popper.js"]
+  		"js": ["scripts/script.js", "scripts/jquery-3.2.1.js", "scripts/bootstrap.js", "scripts/popper.js"]
   	}
   ]
 }

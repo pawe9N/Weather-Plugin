@@ -1,0 +1,56 @@
+body{
+	width: 350px;
+	height: 400px;
+	overflow: hidden;
+	background-image: url('../images/background.jpg');
+	background-size: 100% 100%;
+}
+
+label{
+	font-size: 18px;
+}
+
+h6{
+	text-align: left;
+}
+
+.carousel{
+	height: 300px;
+}
+
+.carousel-indicators{
+	position: absolute;
+	top: 430px;
+}
+
+.carousel-caption{
+	background-size: 100% 100%;
+	color: black;
+	width: 260px;
+	font-size: 11px;
+	left: 45px;
+}
+
+.up{
+	position: absolute;
+	top: 30px;
+	height: 220px;
+	padding: 10px;
+	border-radius: 10px;
+}
+
+.down{
+	position: absolute;
+	bottom: 30px;
+	height: 150px;
+}
+
+.carousel-control-next,.carousel-control-prev{
+	position: absolute;
+	top: 430px;
+}
+
+.carousel-control-next{
+	right: -5px;
+}
+
