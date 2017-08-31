@@ -3,6 +3,11 @@
 
   "name": "Weather plugin",
   "description": "Weather Plugin",
+  "background": {
+      "scripts": [
+          "scripts/background.js"
+      ]
+  },
   "version": "1.0",
 
   "browser_action": {

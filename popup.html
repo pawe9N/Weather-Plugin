@@ -5,6 +5,7 @@
 		<script src="scripts/jquery-3.2.1.js"></script>
 		<script src="scripts/popper.js"></script>
 		<script src="scripts/bootstrap.js"></script>
+		<script src="scripts/background.js"></script>
 		<script src="scripts/script.js"></script>
 		<link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css" />
 		<link rel="stylesheet" href="styles/style.css">
@@ -19,21 +20,12 @@
 			<div class="carousel-inner" role="listbox">
 				<div class="carousel-item active">
 					<img class="d-block" src="images/background.jpg" alt="First slide">
-					<div class="carousel-caption bg-info text-white up">
-						<h5 id="city"></h5>
-						<h6 id="sunRise">sun rise:</h6>
-						<h6 id="sunSet">sun set:</h6>
-						<h6 id="temperature">temperature:</h6>
-						<h6 id="humidity">humidity:</h6>
-						<h6 id="pressure">pressure:</h6>
-						<h6 id="wind">wind direction:</h6>
-						<h6 id="clouds">clouds:</h6>
-					</div>
+					<div class="carousel-caption bg-info text-white up"></div>
 					<div class="carousel-caption bg-success text-white jumbotron down" >
 						<h4>Choose City!</h4>
 						<label for="city">City:</label>
-						<input type="text" name="form-control" id="city"/>
-						<button class="btn btn-primary">Submit</button>
+						<input type="text" id="getCity"/>
+						<button class="btn btn-primary" id="submit">Submit</button>
 					</div>
 				</div>
 				<div class="carousel-item">
