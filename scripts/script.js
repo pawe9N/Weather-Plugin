@@ -6,8 +6,21 @@ $(document).ready(function(){
    	    success: firstPage
 	});
 
-	$('#submit').click(function(){
-		let city = $('#getCity').val();
+    $('.getCity').on("keyup focus mousedown", function(){
+    	let submit = $(this).parent().find('.submit');
+
+        $(submit).prop('disabled', this.value == "" ? true : false);     
+
+        if(event.which == 13 &&
+		   !$(submit).attr('disabled')){
+				$(submit).click();
+		}
+    });
+
+	$('.submit').click(function(){
+		let parent = $(this).parent();
+		let city = $(parent).find('.getCity').val();
+		city = city.charAt(0).toUpperCase() + city.substr(1);
 		let isCity = false;
 		for(i in cities){
 			if(cities[i].name == city){
@@ -22,28 +35,35 @@ $(document).ready(function(){
 				dataType: "xml",
 		   	    success: changeFirstPage
 			});
+
+			$(".getCity").each(function() {
+  				$(this).val("");
+			});
 		}else{
+			 let alerts = $(parent).next();
 			 if($(".alert-info").length){
 			 	 $(".alert-info").remove();
-				 $(".down:eq(0)").append("<h6 class='alert alert-info bg-danger text-warning'>Nie ma takiego miasta</h6>");
+				 $(alerts).append("<h6 class='alert alert-info bg-danger'>City doesn't exist!</h6>");
 				 $(".alert-info").fadeOut(3000);
 			 }else{
-			 	 $(".down:eq(0)").append("<h6 class='alert alert-info bg-danger text-warning'>Nie ma takiego miasta</h6>");
+			 	 $(alerts).append("<h6 class='alert alert-info bg-danger'>City doesn't exist!</h6>");
 				 $(".alert-info").fadeOut(3000);
 			 }
 		}
-	})
+	});
 
 });
 
 function firstPage(xml) {
 	$(xml).find("current").each(function () {
 		let city = $(this).find('city').attr('name');
-	    $(".up:eq(0)").append("<h5 id='city'>"+ city +"</h5>");
+	    $(".up:eq(0)").append("<h4 id='city'>"+ city +"</h4>");
 	    let sunRise = $(this).find('sun').attr('rise');
-	    $(".up:eq(0)").append("<h6 id='sunRise'>sun rise: "+sunRise+"</h6>");
+	    sunRise = sunRise.substr(11,18);
+	    $(".up:eq(0)").append("<h6 id='sunRise'>sun rise: "+sunRise.replace('T', " ")+"</h6>");
 	    let sunSet = $(this).find('sun').attr('set');
-	    $(".up:eq(0)").append("<h6 id='sunSet'>sun set: "+sunSet+"</h6>");
+	    sunSet = sunSet.substr(11,18);
+	    $(".up:eq(0)").append("<h6 id='sunSet'>sun set: "+sunSet.replace('T', " ")+"</h6>");
 	    let temperature = $(this).find('temperature').attr('value');
 	    $(".up:eq(0)").append("<h6 id='temperature'>temperature: "+temperature+"&#8451;</h6>");
 	    let humidity  = $(this).find('humidity').attr('value');
@@ -51,7 +71,12 @@ function firstPage(xml) {
 	    let pressure  = $(this).find('pressure').attr('value');
 	    $(".up:eq(0)").append("<h6 id='pressure'>pressure: "+pressure+"hpa</h6>");
 	    let wind  = $(this).find('wind').find('direction').attr('name');
-	    $(".up:eq(0)").append("<h6 id='wind'>wind: "+wind+"</h6>");
+	    if(wind == ""){
+	    	wind  = $(this).find('wind').find('speed ').attr('name');
+	    	$(".up:eq(0)").append("<h6 id='wind'>wind: "+wind+"</h6>");
+	    }else{
+	    	$(".up:eq(0)").append("<h6 id='wind'>wind direction: "+wind+"</h6>");
+		}
 	    let clouds   = $(this).find('clouds').attr('name');
 	    $(".up:eq(0)").append("<h6 id='clouds'>clouds: "+clouds+"</h6>");
 	 });
@@ -63,8 +88,10 @@ function changeFirstPage(xml){
 		let city = $(this).find('city').attr('name');
 	    $(".up:eq(0) > #city").text(city);
 	    let sunRise = $(this).find('sun').attr('rise');
+		sunRise = sunRise.substr(11,18);
 	    $(".up:eq(0) > #sunRise").text('sun rise: '+sunRise);
 	    let sunSet = $(this).find('sun').attr('set');
+	    sunSet = sunSet.substr(11,18);
 	    $(".up:eq(0) > #sunSet").text('sun set: '+sunSet);
 	    let temperature = $(this).find('temperature').attr('value');
 	    $(".up:eq(0) > #temperature").html('temperature: '+temperature+"&#8451;");
@@ -73,7 +100,12 @@ function changeFirstPage(xml){
 	    let pressure  = $(this).find('pressure').attr('value');
 	    $(".up:eq(0) > #pressure").text('pressure: '+pressure+'hpa');
 	    let wind  = $(this).find('wind').find('direction').attr('name');
-	    $(".up:eq(0) > #wind").text('wind: '+wind);
+	    if(wind == ""){
+	    	wind  = $(this).find('wind').find('speed ').attr('name');
+	    	$(".up:eq(0) > #wind").text("wind: "+wind);
+	    }else{
+	    	$(".up:eq(0) > #wind").text("wind direction: "+wind);
+		}
 	    let clouds   = $(this).find('clouds').attr('name');
 	    $(".up:eq(0) > #clouds").text('clouds: '+clouds);
 	 });
