@@ -77,8 +77,11 @@ function firstPage(xml) {
 	    }else{
 	    	$(".up:eq(0)").append("<h6 id='wind'>wind direction: "+wind+"</h6>");
 		}
-	    let clouds   = $(this).find('clouds').attr('name');
+	    let clouds = $(this).find('clouds').attr('name');
 	    $(".up:eq(0)").append("<h6 id='clouds'>clouds: "+clouds+"</h6>");
+	    let weather = $(this).find('weather ').attr('value');
+	    $(".up:eq(0)").append("<h6 id='weather'>weather: "+weather+"</h6>");
+	    firstPageImage(weather);
 	 });
 
 }
@@ -106,7 +109,37 @@ function changeFirstPage(xml){
 	    }else{
 	    	$(".up:eq(0) > #wind").text("wind direction: "+wind);
 		}
-	    let clouds   = $(this).find('clouds').attr('name');
+	    let clouds = $(this).find('clouds').attr('name');
 	    $(".up:eq(0) > #clouds").text('clouds: '+clouds);
+	    let weather = $(this).find('weather').attr('value');
+	    $(".up:eq(0) > #weather").text('weather: ' + weather);
+	    firstPageImage(weather);
 	 });
+}
+
+function firstPageImage(weather){
+	switch(weather){
+		case "scattered clouds": $(".up:eq(0) > img").attr('src', 'images/n_3_M.png'); break;
+		case "clear sky": $(".up:eq(0) > img").attr('src', 'images/d_0_M.png'); break;
+		case "few clouds": $(".up:eq(0) > img").attr('src', 'images/d_10_M.png'); break;
+		case "light rain": $(".up:eq(0) > img").attr('src', 'images/d_5_M.png'); break;
+		case "broken clouds": $(".up:eq(0) > img").attr('src', 'images/d_30_M.png'); break;
+		case "shower rain": $(".up:eq(0) > img").attr('src', 'images/d_8_M.png'); break;
+		case "rain": $(".up:eq(0) > img").attr('src', 'images/d_53_M.png'); break;
+		case "thunderstorm": $(".up:eq(0) > img").attr('src', 'images/d_9_M.png'); break;
+		case "snow": $(".up:eq(0) > img").attr('src', 'images/d_40_M.png'); break;
+		case "mist": $(".up:eq(0) > img").attr('src', 'images/d_5_M.png'); break;
+		default: 
+			if(weather.includes('thunderstorm')){
+				$(".up:eq(0) > img").attr('src', 'images/d_9_M.png');break;
+			}else if(weather.includes('drizzle')){
+				$(".up:eq(0) > img").attr('src', 'images/d_8_M.png');break;
+			}else if(weather.includes('rain')){
+				$(".up:eq(0) > img").attr('src', 'images/d_53_M.png');break;
+			}else if(weather.includes('snow')){
+				 $(".up:eq(0) > img").attr('src', 'images/d_40_M.png');break;
+			}else if(weather.includes('clouds')){
+				 $(".up:eq(0) > img").attr('src', 'images/n_3_M.png');break;
+			}
+	}
 }

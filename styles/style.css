@@ -58,14 +58,15 @@ p{
 }
 
 .up > h4{
+	margin-top: 10px;
 	text-align: center;
 	font-family: proza;
 }
 
 .up > img{
-	width: 30%;
-	height: 30%;
-	margin: 0;
+	position: absolute;
+	top: 40px;
+	right: 10px;
 }
 
 .down{
@@ -113,6 +114,10 @@ p{
 	cursor: pointer;
 	background-color: dodgerblue;
 	color: white;
+}
+
+.btn:disabled{
+	cursor: not-allowed
 }
 
 label{
