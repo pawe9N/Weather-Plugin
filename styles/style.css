@@ -132,3 +132,12 @@ input[type=text]{
 	color: dodgerblue;
 	padding: 3px;
 }
+
+select{
+	font-size: 13px;
+	background-color: white;
+	color: dodgerblue;
+	padding: 3px;
+	border-radius: 10px;
+	outline: none;
+}
