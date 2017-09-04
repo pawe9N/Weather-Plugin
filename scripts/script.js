@@ -10,10 +10,19 @@ $(document).ready(function(){
 
 	$.ajax({
 		type: "GET",
-		url: "http://api.openweathermap.org/data/2.5/forecast?q=Gdynia&APPID=b1c1023185273553b424682ce98c6144&mode=xml&units=metric",
+		url: "http://api.openweathermap.org/data/2.5/forecast?q=Gdynia&APPID=b1c1023185273553b424682ce98c6144&mode=xml&units=metric&cnt=10",
 		dataType: "xml",
    	    success: function(xml){
             secondPageSelect(xml);
+        }
+	});
+
+	$.ajax({
+		type: "GET",
+		url: "http://api.openweathermap.org/data/2.5/uvi?appid=b1c1023185273553b424682ce98c6144&lat=54.51889&lon=18.531879",
+		dataType: "json",
+   	    success: function(data){
+            thirdPageUVToday(data, "Gdynia");
         }
 	});
 
@@ -31,11 +40,14 @@ $(document).ready(function(){
 	$('.submit').click(function(){
 		let parent = $(this).parent();
 		let city = $(parent).find('.getCity').val();
+		let latitude, longitude;
 		city = city.charAt(0).toUpperCase() + city.substr(1);
 		let isCity = false;
 		for(i in cities){
 			if(cities[i].name == city){
 				isCity = true;
+				latitude = cities[i].coord.lat;
+				longitude = cities[i].coord.lon;
 				break;
 			}
 		}
@@ -51,10 +63,19 @@ $(document).ready(function(){
 
 			$.ajax({
 				type: "GET",
-				url: "http://api.openweathermap.org/data/2.5/forecast?q="+city+"&APPID=b1c1023185273553b424682ce98c6144&mode=xml&units=metric",
+				url: "http://api.openweathermap.org/data/2.5/forecast?q="+city+"&APPID=b1c1023185273553b424682ce98c6144&mode=xml&units=metric&cnt=10",
 				dataType: "xml",
 		   	    success: function(xml){
 		            changeSecondPageSelect(xml);
+		        }
+			});
+
+			$.ajax({
+				type: "GET",
+				url: "http://api.openweathermap.org/data/2.5/uvi?appid=b1c1023185273553b424682ce98c6144&lat="+latitude+"&lon="+longitude,
+				dataType: "json",
+		   	    success: function(data){
+		            changethirdPageUVToday(data, city);
 		        }
 			});
 
@@ -75,7 +96,7 @@ $(document).ready(function(){
 	});
 
 	$(".middle:eq(0) > select").change(function(){
-		let city = $(".up:eq(0)").find('#city').text();
+		let city = $(".up:eq(1)").find('#cityS').text();
 		let id = $(this).find(":selected").attr("id");
 
 		$.ajax({
@@ -95,7 +116,7 @@ function firstPage(xml) {
 	let night;
 
 	$(xml).find("current").each(function () {
-		city = $(this).find('city').attr('name');
+		let city = $(this).find('city').attr('name');
 	    $(".up:eq(0)").append("<h4 id='city'>"+ city +"</h4>");
 	    let sunRise = $(this).find('sun').attr('rise');
 	    sunRise = sunRise.substr(11,18);
@@ -130,7 +151,7 @@ function changeFirstPage(xml){
 	let night;
 
 	$(xml).find("current").each(function () {
-		city = $(this).find('city').attr('name');
+		let city = $(this).find('city').attr('name');
 	    $(".up:eq(0) > #city").text(city);
 	    let sunRise = $(this).find('sun').attr('rise');
 		sunRise = sunRise.substr(11,18);
@@ -217,7 +238,8 @@ function pageImage(weather, night, upIndex){
 
 function dayTime(sunRise, sunSet){
 	let date = new Date();
-	let dayTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+	let dayTime = ("0" + date.getHours()).slice(-2)   + ":" + ("0" + date.getMinutes()).slice(-2) + ":" +  ("0" + date.getSeconds()).slice(-2);
+
 	if(!(sunRise <= dayTime && sunSet >= dayTime)){
 	    return true;
 	}else{
@@ -229,7 +251,7 @@ function secondPageSelect(xml){
 	$(xml).find("time").each(function (index) {
 		let timeFrom = $(this).attr('from').replace("T", " ").substr(5,18);
 		let timeTo = $(this).attr('to').replace("T", " ").substr(5,18);
-	    $(".middle:eq(0) > select").append("<option id="+index+">From: "+timeFrom+" To: "+timeTo+"</option>");
+	    $(".middle:eq(0) > select").append("<option id="+index+">From: "+timeFrom+"  To: "+timeTo+"</option>");
 	 });
 	showingWeatherOfSecondPage(xml, 0);
 }
@@ -239,16 +261,20 @@ function changeSecondPageSelect(xml){
 	$(xml).find("time").each(function (index) {
 		let timeFrom = $(this).attr('from').replace("T", " ").substr(5,18);
 		let timeTo = $(this).attr('to').replace("T", " ").substr(5,18);
-	    $(".middle:eq(0) > select").append("<option id="+index+">From: "+timeFrom+" To: "+timeTo+"</option>");
+	    $(".middle:eq(0) > select").append("<option id="+index+">From: "+timeFrom+"  To: "+timeTo+"</option>");
 	 });
 	changeShowingWeatherOfSecondPage(xml, 0);
 }
 
 function showingWeatherOfSecondPage(xml, index){
 	let night = false;
+
+	$(xml).find("location:eq(0)").each(function(){
+		 let cityS = $(this).find("name").text();
+		 $(".up:eq(1)").append("<h4 id='cityS'>"+ cityS +"</h4>");
+	});
+
 	$(xml).find("time:eq("+index+")").each(function(){
-		 city = $(".up:eq(0)").find('#city').text();
-		 $(".up:eq(1)").append("<h4 id='cityS'>"+ city +"</h4>");
 	     let weather = $(this).find('symbol').attr('name');
 	     $(".up:eq(1)").append("<h6 id='weatherS'>weather: "+ weather +"</h6>");
 	     let wind = $(this).find('windSpeed').attr('name');
@@ -272,9 +298,13 @@ function showingWeatherOfSecondPage(xml, index){
 
 function changeShowingWeatherOfSecondPage(xml, index){
 	let night = false;
-	$(xml).find("time:eq("+index+")").each(function(){
-		 city = $(".up:eq(0)").find('#city').text();
-		 $(".up:eq(1) > #cityS").text(city);
+
+	$(xml).find("location:eq(0)").each(function(){
+		 let cityS = $(this).find("name").text();
+		 $(".up:eq(1) > #cityS").html(cityS);
+	});
+
+	$(xml).find("time:eq("+index+")").each(function(){		
 	     let weather = $(this).find('symbol').attr('name');
 	     $(".up:eq(1) > #weatherS").html("weather: "+ weather);
 	     let wind = $(this).find('windSpeed').attr('name');
@@ -294,4 +324,21 @@ function changeShowingWeatherOfSecondPage(xml, index){
 	     $(".up:eq(1) > #cloudsS").html("clouds: "+ clouds);
 	     pageImage(weather, night, 1);
 	});
+}
+
+function thirdPageUVToday(data, city){
+    $(".up:eq(2)").append("<h4 id='cityT'>"+ city +"</h4>");
+    $(".up:eq(2)").append("<h5><center>UV index for today</center></h5>");
+    let date = data.date_iso.replace("T", " ").replace("Z", "").substr(0,10);
+	$(".up:eq(2)").append("<h6 id='date'>date: "+ date +"</h6>");
+	let uvIndex = data.value;
+	$(".up:eq(2)").append("<h6 id='uvIndex'>UV index: "+ uvIndex +"</h6>");
+}
+
+function changethirdPageUVToday(data, city){
+    $(".up:eq(2) > #cityT").html(city);
+    let date = data.date_iso.replace("T", " ").replace("Z", "").substr(0,10);
+	$(".up:eq(2) > #date").html("date: "+ date);
+	let uvIndex = data.value;
+	$(".up:eq(2) > #uvIndex").html("UV index: "+ uvIndex);
 }
