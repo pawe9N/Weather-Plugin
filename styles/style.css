@@ -146,3 +146,22 @@ select{
 	border-radius: 10px;
 	outline: none;
 }
+
+#uvIndex{
+	display: inline-block;
+	background-color: white;
+	padding: 5px;
+	border-radius: 10px;
+}
+
+#uvIndex > span{
+	font-weight: bold;
+}
+
+#windS, #wind, #windDirection, #windDirectionS{
+	text-transform: lowercase;
+}
+
+#date{
+	font-family: proza;
+}

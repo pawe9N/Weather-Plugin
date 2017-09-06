@@ -11,27 +11,27 @@
 		<link rel="stylesheet" href="styles/style.css">
 	</head>
 	<body>
-		<div id="carouselExampleIndicators" class="carousel" data-ride="carousel"  data-interval="false">
+		<div id="carousel" class="carousel" data-ride="carousel"  data-interval="false">
 			<ol class="carousel-indicators">
-				<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-				<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-				<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-				<li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+				<li data-target="#carousel" data-slide-to="0" class="active"></li>
+				<li data-target="#carousel" data-slide-to="1"></li>
+				<li data-target="#carousel" data-slide-to="2"></li>
+				<li data-target="#carousel" data-slide-to="3"></li>
 			</ol>
 			<div class="carousel-inner" role="listbox">
 				<div class="carousel-item active">
 					<img class="d-block" src="images/background.jpg" alt="First slide">
 					<div class="carousel-caption">
-						<h2>Welcome in Weather Plugin!</h2>
+						<h2>Welcome in <br> Weather Plugin!</h2>
 						<img src="images/n_3_M.png" width="70px">
 						<img src="images/welcome.png" width="60px">
 						<img src="images/d_65_M.png" width="70px">
-						<p>If you want to check weather in your city, type it name below nad click control arrows!</p>
+						<p>If you want to check weather in your city, type it name below and click control arrows!</p>
 						<div class="down">
 							<h5>Choose City!</h4>
 							<label for="city">City:</label>
 							<input type="text" class="getCity"/>
-							<button class="btn submit">Submit</button>
+							<button class="btn submit welcomeButton">Submit</button>
 						</div>
 						<div class="alerts"></div>
 					</div>
@@ -122,11 +122,11 @@
 					</div>
 				</div>
 			</div>
-			<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+			<a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 				<span class="sr-only">Previous</span>
 			</a>
-			<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+			<a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
 				<span class="carousel-control-next-icon" aria-hidden="true"></span>
 				<span class="sr-only">Next</span>
 			</a>

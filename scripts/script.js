@@ -79,6 +79,10 @@ $(document).ready(function(){
 		        }
 			});
 
+			if($(this).hasClass("welcomeButton")){
+				 $('#carousel').carousel("next");
+			}
+
 			$(".getCity").each(function() {
   				$(this).val("");
 			});
@@ -123,14 +127,14 @@ function firstPage(xml) {
 	    $(".up:eq(0)").append("<h6 id='sunRise'>sun rise: "+sunRise.replace('T', " ")+"</h6>");
 	    let sunSet = $(this).find('sun').attr('set');
 	    sunSet = sunSet.substr(11,18);
-	    night = dayTime(sunRise, sunSet);
+	    night = dayTime($(this).find('sun').attr('rise'), $(this).find('sun').attr('set'));
 	    $(".up:eq(0)").append("<h6 id='sunSet'>sun set: "+sunSet.replace('T', " ")+"</h6>");
 	    let temperature = $(this).find('temperature').attr('value');
 	    $(".up:eq(0)").append("<h6 id='temperature'>temperature: "+temperature+"&#8451;</h6>");
 	    let humidity  = $(this).find('humidity').attr('value');
 	    $(".up:eq(0)").append("<h6 id='humidity'>humidity: "+humidity+"%</h6>");
 	    let pressure  = $(this).find('pressure').attr('value');
-	    $(".up:eq(0)").append("<h6 id='pressure'>pressure: "+pressure+"hPa</h6>");
+	    $(".up:eq(0)").append("<h6 id='pressure'>pressure: "+pressure+" hPa</h6>");
 	    let wind  = $(this).find('wind').find('direction').attr('name');
 	    if(wind == ""){
 	    	wind  = $(this).find('wind').find('speed ').attr('name');
@@ -158,14 +162,14 @@ function changeFirstPage(xml){
 	    $(".up:eq(0) > #sunRise").text('sun rise: '+sunRise);
 	    let sunSet = $(this).find('sun').attr('set');
 	    sunSet = sunSet.substr(11,18);
-	    night = dayTime(sunRise, sunSet);
+	    night = dayTime($(this).find('sun').attr('rise'), $(this).find('sun').attr('set'));
 	    $(".up:eq(0) > #sunSet").text('sun set: '+sunSet);
 	    let temperature = $(this).find('temperature').attr('value');
 	    $(".up:eq(0) > #temperature").html('temperature: '+temperature+"&#8451;");
 	    let humidity  = $(this).find('humidity').attr('value');
 	    $(".up:eq(0) > #humidity").text('humidity: '+humidity+"%");
 	    let pressure  = $(this).find('pressure').attr('value');
-	    $(".up:eq(0) > #pressure").text('pressure: '+pressure+'hPa');
+	    $(".up:eq(0) > #pressure").text('pressure: '+pressure+' hPa');
 	    let wind  = $(this).find('wind').find('direction').attr('name');
 	    if(wind == ""){
 	    	wind  = $(this).find('wind').find('speed ').attr('name');
@@ -238,7 +242,7 @@ function pageImage(weather, night, upIndex){
 
 function dayTime(sunRise, sunSet){
 	let date = new Date();
-	let dayTime = ("0" + date.getHours()).slice(-2)   + ":" + ("0" + date.getMinutes()).slice(-2) + ":" +  ("0" + date.getSeconds()).slice(-2);
+	let dayTime = date.toISOString();
 
 	if(!(sunRise <= dayTime && sunSet >= dayTime)){
 	    return true;
@@ -278,7 +282,7 @@ function showingWeatherOfSecondPage(xml, index){
 	     let weather = $(this).find('symbol').attr('name');
 	     $(".up:eq(1)").append("<h6 id='weatherS'>weather: "+ weather +"</h6>");
 	     let wind = $(this).find('windSpeed').attr('name');
-	     if(wind != undefined)
+	     if(wind != undefined && wind != "")
 	     	$(".up:eq(1)").append("<h6 id='windS'>wind: "+ wind +"</h6>");
 	     let windSpeed = $(this).find('windSpeed').attr('mps');
 	     $(".up:eq(1)").append("<h6 id='windSpeedS'>wind Speed: "+ windSpeed +" mps</h6>");
@@ -287,7 +291,7 @@ function showingWeatherOfSecondPage(xml, index){
 	     let temperature = $(this).find('temperature').attr('value');
 	     $(".up:eq(1)").append("<h6 id='temperatureS'>temperature: "+ temperature +"&#8451;</h6>");
 	     let pressure = $(this).find('pressure').attr('value');
-	     $(".up:eq(1)").append("<h6 id='pressureS'>pressure: "+ pressure +"hPa</h6>");
+	     $(".up:eq(1)").append("<h6 id='pressureS'>pressure: "+ pressure +" hPa</h6>");
 	     let humidity = $(this).find('humidity').attr('value');
 	     $(".up:eq(1)").append("<h6 id='humidityS'>humidity: "+ humidity +"%</h6>");
 	     let clouds = $(this).find('clouds').attr('value');
@@ -308,7 +312,7 @@ function changeShowingWeatherOfSecondPage(xml, index){
 	     let weather = $(this).find('symbol').attr('name');
 	     $(".up:eq(1) > #weatherS").html("weather: "+ weather);
 	     let wind = $(this).find('windSpeed').attr('name');
-	     if(wind != undefined)
+	     if(wind != undefined && wind != "")
 	     	$(".up:eq(1) > #windS").html("wind: "+ wind);
 	     let windSpeed = $(this).find('windSpeed').attr('mps');
 	     $(".up:eq(1) > #windSpeedS").html("wind Speed: "+ windSpeed +" mps");
@@ -317,7 +321,7 @@ function changeShowingWeatherOfSecondPage(xml, index){
 	     let temperature = $(this).find('temperature').attr('value');
 	     $(".up:eq(1) > #temperatureS").html("temperature: "+ temperature +"&#8451;");
 	     let pressure = $(this).find('pressure').attr('value');
-	     $(".up:eq(1) > #pressureS").html("pressure: "+ pressure +"hPa");
+	     $(".up:eq(1) > #pressureS").html("pressure: "+ pressure +" hPa");
 	     let humidity = $(this).find('humidity').attr('value');
 	     $(".up:eq(1) > #humidityS").html("humidity: "+ humidity +"%");
 	     let clouds = $(this).find('clouds').attr('value');
@@ -328,17 +332,32 @@ function changeShowingWeatherOfSecondPage(xml, index){
 
 function thirdPageUVToday(data, city){
     $(".up:eq(2)").append("<h4 id='cityT'>"+ city +"</h4>");
-    $(".up:eq(2)").append("<h5><center>UV index for today</center></h5>");
     let date = data.date_iso.replace("T", " ").replace("Z", "").substr(0,10);
-	$(".up:eq(2)").append("<h6 id='date'>date: "+ date +"</h6>");
+    $(".up:eq(2)").append("<h5 id='date'><center>UV index for "+date+"</center></h5>");
 	let uvIndex = data.value;
-	$(".up:eq(2)").append("<h6 id='uvIndex'>UV index: "+ uvIndex +"</h6>");
+	$(".up:eq(2)").append("<h6 id='uvIndex'>UV index: <span>"+ uvIndex +"</span></h6>");
+	changingColorOFUV(uvIndex);
 }
 
 function changethirdPageUVToday(data, city){
     $(".up:eq(2) > #cityT").html(city);
     let date = data.date_iso.replace("T", " ").replace("Z", "").substr(0,10);
-	$(".up:eq(2) > #date").html("date: "+ date);
+	$(".up:eq(2) > #date").html("<center>UV index for today "+date+"</center>");
 	let uvIndex = data.value;
-	$(".up:eq(2) > #uvIndex").html("UV index: "+ uvIndex);
+	$(".up:eq(2) > #uvIndex").html("UV index: <span>"+ uvIndex +"</span>");
+	changingColorOFUV(uvIndex);
+}
+
+function changingColorOFUV(uvIndex){
+	if(uvIndex >= 0 && uvIndex < 3){
+		$("#uvIndex").css("color", "green");
+	}else if(uvIndex >= 3 && uvIndex < 6){
+		$("#uvIndex").css("color", "deepskyblue");
+	}else if(uvIndex >= 6 && uvIndex < 8){
+		$("#uvIndex").css("color", "blue");
+	}else if(uvIndex >= 8 && uvIndex < 11){
+		$("#uvIndex").css("color", "#999900");
+	}else{
+		$("#uvIndex").css("color", "red");
+	}
 }
