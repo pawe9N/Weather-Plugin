@@ -10,30 +10,33 @@ If you want to use this program, you have to download all files. Then you should
 
 - starting an application with showing welcome slide
 
-<img src=""/>
+<img src="https://media.giphy.com/media/3ohhwMN0lJ2RvLTU6k/giphy.gif"/>
 
 - showing default city, with its current weather, forecast weather and UV index
 
-<img src=""/>
+<img src="https://media.giphy.com/media/l1J9NQY2Ypk8YoitO/giphy.gif"/>
 
 - changing city
 
-<img src=""/>
+<img src="https://media.giphy.com/media/l1J9OjShNd3Y048Gk/giphy.gif"/>
 
 - showing alert which tell us that city is not exist in openweather database
 
-<img src=""/>
+<img src="https://media.giphy.com/media/xT9IgMGXp6ArWnXquY/giphy.gif"/>
+
+- showing some examples of weather images
+
+<img src="https://media.giphy.com/media/xT9IgjksMfGSNor6Zq/giphy.gif"/>
 
 - changing time in weather forecast
 
-<img src=""/>
+<img src="https://media.giphy.com/media/3o7aDaI4s1J2LXiABW/giphy.gif"/>
 
 - showing UV index of exemplary cities
 
-<img src=""/>
+<img src="https://media.giphy.com/media/3ohhwmgp7A8SQbLCxO/giphy.gif"/>
 
-- changing images of weather in day and night
 
-<img src=""/>
+
 
 
