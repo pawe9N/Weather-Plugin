@@ -20,7 +20,7 @@ If you want to use this program, you have to download all files. Then you should
 
 <img src="https://media.giphy.com/media/l1J9OjShNd3Y048Gk/giphy.gif"/>
 
-- showing alert which tell us that city is not exist in openweather database
+- showing alert which tell us that city is not exist in openweathermap database
 
 <img src="https://media.giphy.com/media/xT9IgMGXp6ArWnXquY/giphy.gif"/>
 
