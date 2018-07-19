@@ -1,6 +1,6 @@
 # Weather Plugin
 
-Weather Plugin is an extension for chrome, which was made for purpose of learning JQuery, Bootstrap Carousel Plugin and Weather API.
+Weather Plugin is an extension for chrome, which was made for purpose of learning JQuery, popper.js, Bootstrap Carousel Plugin and Weather API.
 
 ## Description of plugin
 This extension can show you current weather data, weather forecast data and UV index data from openweathermap.org in better layout. 
